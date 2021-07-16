@@ -1,0 +1,13 @@
+html,
+body {
+	background: url(../images/bg1.jpg);
+  	overflow hidden;
+} 
+
+
+.nav {
+	opacity: 1;
+	background-color: #faf9de;
+	position: relative;
+	top:0;
+}

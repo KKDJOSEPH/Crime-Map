@@ -1,0 +1,48 @@
+html,
+body {
+  margin: 0px;
+  color: #3c240f;
+}
+
+.SignUp {
+  background: url(../images/crime.png) center center / cover no-repeat;
+  overflow hidden;
+}
+
+.signcard {
+  background-color: #faf9de;
+  opacity: 1;
+  height: 40 rem;
+  width: 300px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.card-header {
+  color: #3c240f;
+}
+
+.card-body {
+  color: #3c240f;
+  height: 30rem;
+}
+
+.container-fluid {
+  align-content: center;
+  height: 100vh;
+}
+
+a {
+  font-family: "Roboto", sans-serif;
+  color: brown;
+}
+
+
+
+.nav{
+	opacity: 1;
+	background-color: #faf9de;
+	position: relative;
+	top:0;
+	color: brown;
+}
