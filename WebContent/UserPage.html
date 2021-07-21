@@ -13,7 +13,29 @@
     <script>
     function changepage(){
     	window.location.href = "UpdateProfile.html";
-    }</script>
+    }
+    
+    function deleteuser(){
+    	const nm = sessionStorage.getItem('userName');
+    	$.ajax({
+    		type: "post",
+    	    dataType: "text",
+    	    url: "deleteuser",
+    	    data: {
+    	    	userName: nm
+    	    },	
+    	    success: function (msg) {
+    	    	console.log(msg);
+    	    	window.location.href = "index.html";
+    			       },
+    			       error:function(err){
+    			    	   console.log("error in ajax");
+    			    	   console.log(err);
+    			    	   console.log(err.responseText);
+    			       }
+    				  });
+    }
+    </script>
     <title>Profile</title>
     <meta name="author" content="Haoyang Ding" />
     <link href="./images/icon.jpg" type="image/x-icon" rel="icon" />
@@ -29,7 +51,6 @@
 	        <div class="col-md-6">
 	          <div class="card profile-card">
 	            <div class="card-body" id="myProfile" id="myProfile">
-	            
 			       <div class="row mb-5">
 			        <div class="col-12 text-center pt-3">
 			          <h1>My Profile</h1>

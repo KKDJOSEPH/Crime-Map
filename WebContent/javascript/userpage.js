@@ -1,7 +1,7 @@
 const showUserProfile = async () => {
-	  const myProfile = document.querySelector('#myProfile');
-	  const nm = sessionStorage.getItem('userName');
-	  console.log("now user name is:   " + nm);
+	  const myProfile = document.querySelector('#myProfile'); // <div id="myProfile"> </div>
+	  const nm = sessionStorage.getItem('userName'); // return current user name
+	  console.log("now user name is:   " + nm); // print
 		$.ajax({
 			type: "post",
 		    dataType: "json",
@@ -11,12 +11,12 @@ const showUserProfile = async () => {
 		    },	
 		    success: function (msg) {
 		    	console.log(msg);
-		    	const firstNameRow = document.createElement('div');
+		    	const firstNameRow = document.createElement('div'); // <div class = "row info-row align-items-center justify-content-center"> </div>
 		    	firstNameRow.className =
 		    		'row info-row align-items-center justify-content-center';
 		    	const firstNameLeftCol = document.createElement('div');
 		    	firstNameLeftCol.className = 'col-5';
-		    	firstNameLeftCol.innerHTML = '<p>' + 'First Name: ' + '</p>';
+		    	firstNameLeftCol.innerHTML = '<p>' + 'First Name: ' + '</p>'; // <div> <p> First Name: </p> </div>
 		    	firstNameRow.appendChild(firstNameLeftCol);
 		    	const firstNameRightCol = document.createElement('div');
 		    	firstNameRightCol.className = 'col-7';
@@ -42,6 +42,13 @@ const showUserProfile = async () => {
 		    	buttonRow.innerHTML =
 		    		'<button type = "button" class="btn btn-dark" id = "button" onclick="changepage()"> Change your information </button>';
 		    	myProfile.appendChild(buttonRow);
+		    	const br = document.createElement('br');
+		    	myProfile.appendChild(br);
+		    	const buttonRow2 = document.createElement('div');
+		    	buttonRow2.className = 'form-group row align-items-center justify-content-center';
+		    	buttonRow2.innerHTML =
+		    		'<button type = "button" class="btn btn-dark" id = "button" onclick="deleteuser()"> Delete your account </button>';
+		    	myProfile.appendChild(buttonRow2);
 				       },
 				       error:function(err){
 				    	   console.log("error in ajax");
