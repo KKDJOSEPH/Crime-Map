@@ -31,7 +31,7 @@ async function sendflag(){
 		$.ajax({
 			type: "post",
 		    dataType: "text",
-		    url: "signin",	
+		    url: "signin",
 		    data: {
 		    	userName: nm,
 		    	passWord: pw
@@ -41,6 +41,7 @@ async function sendflag(){
 		    	const divName = document.createElement("div");
 
 				if(msg == "1"){
+					sessionStorage.setItem('userName', nm);
 					divName.className = "alert alert-success alert-dismissible fade show";
 					divName.textContent = "Sign in successful";
 				}
@@ -67,7 +68,7 @@ async function sendflag(){
 			window.setTimeout(function(){
 				divflag.removeChild(divName);
 			}, 2000);
-			if(msg == "1") window.location.href = "CrimeTipsCreate.jsp";
+			if(msg == "1") window.location.href = "UserPage.html";
 	       },
 	       error:function(err){
 	    	   console.log("error in ajax");

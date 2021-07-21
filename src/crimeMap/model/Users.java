@@ -1,7 +1,7 @@
 package crimeMap.model;
 
 public class Users extends Persons{
-  protected double credibilityRating;
+	double credibilityRating;
 
   public Users(String userName, String password, String firstName, String lastName, double credibilityRating) {
     super(userName, password, firstName, lastName);

@@ -22,18 +22,56 @@ public class UsersDao extends PersonsDao{
 
 	public Users create(Users user) throws SQLException {
 		// Insert into the superclass table first.
-		create(new Persons(user.getUserName(), user.getPassword(), user.getFirstName(),
-			user.getLastName()));
-
-		String insertUser = "INSERT INTO Users(UserName,CredibilityRating) VALUES(?,?);";
+		String insertPerson = "INSERT INTO Persons(UserName,Password,FirstName,LastName) VALUES(?,?,?,?);";
 		Connection connection = null;
 		PreparedStatement insertStmt = null;
 		try {
 			connection = connectionManager.getConnection();
-			insertStmt = connection.prepareStatement(insertUser);
+			insertStmt = connection.prepareStatement(insertPerson);
+			// PreparedStatement allows us to substitute specific types into the query template.
+			// For an overview, see:
+			// http://docs.oracle.com/javase/tutorial/jdbc/basics/prepared.html.
+			// http://docs.oracle.com/javase/7/docs/api/java/sql/PreparedStatement.html
+			// For nullable fields, you can check the property first and then call setNull()
+			// as applicable.
 			insertStmt.setString(1, user.getUserName());
-			insertStmt.setDouble(2, user.getCredibilityRating());
+			insertStmt.setString(2, user.getPassword());
+			insertStmt.setString(3, user.getFirstName());
+			insertStmt.setString(4, user.getLastName());
+			// Note that we call executeUpdate(). This is used for a INSERT/UPDATE/DELETE
+			// statements, and it returns an int for the row counts affected (or 0 if the
+			// statement returns nothing). For more information, see:
+			// http://docs.oracle.com/javase/7/docs/api/java/sql/PreparedStatement.html
+			// I'll leave it as an exercise for you to write UPDATE/DELETE methods.
 			insertStmt.executeUpdate();
+			
+			// Note 1: if this was an UPDATE statement, then the person fields should be
+			// updated before returning to the caller.
+			// Note 2: there are no auto-generated keys, so no update to perform on the
+			// input param person.
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if(connection != null) {
+				connection.close();
+			}
+			if(insertStmt != null) {
+				insertStmt.close();
+			}
+		}
+
+		String insertUser = "INSERT INTO Users(UserName,CredibilityRating) VALUES(?,?);";
+		connection = null;
+		insertStmt = null;
+		try {
+			connection = connectionManager.getConnection();
+			insertStmt = connection.prepareStatement(insertUser);
+			
+			insertStmt.setString(1, user.getUserName());
+			insertStmt.setDouble(2, 0.0);
+			insertStmt.executeUpdate();
+			System.out.println("why I cant insert into users");
 			return user;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -52,10 +90,10 @@ public class UsersDao extends PersonsDao{
 	 * Update the LastName of the BlogUsers instance.
 	 * This runs a UPDATE statement.
 	 */
-	public Users updateName(Users user, String newFirstName, String newLastName) throws SQLException {
+	public Persons updateUser(Persons user, String newFirstName, String newLastName, String newPassword) throws SQLException {
 		// The field to update only exists in the superclass table, so we can
 		// just call the superclass method.
-		super.updateName(user, newFirstName, newLastName);
+		super.updateUser(user, newFirstName, newLastName, newPassword);
 		return user;
 	}
 
@@ -173,28 +211,29 @@ public class UsersDao extends PersonsDao{
 		}
 	}
 
-	public Users getUserFromUserName(String userName) throws SQLException {
+	public Persons getUserFromUserName(String userName) throws SQLException {
 		// To build an BlogUser object, we need the Persons record, too.
 		String selectUser =
-			"SELECT Users.UserName AS UserName, Password, FirstName, LastName, CredibilityRating " +
-			"FROM Users INNER JOIN Persons " +
-			"  ON Users.UserName = Persons.UserName " +
-			"WHERE Users.UserName=?;";
+			"SELECT * " +
+			"FROM Persons " +
+			"WHERE UserName=?;";
 		Connection connection = null;
 		PreparedStatement selectStmt = null;
 		ResultSet results = null;
+		System.out.println("I'm here in the getUserFromUserName");
 		try {
 			connection = connectionManager.getConnection();
 			selectStmt = connection.prepareStatement(selectUser);
 			selectStmt.setString(1, userName);
 			results = selectStmt.executeQuery();
 			if(results.next()) {
+
 				String resultUserName = results.getString("UserName");
 				String password = results.getString("Password");
 				String firstName = results.getString("FirstName");
 				String lastName = results.getString("LastName");
-				double rating = results.getDouble("CredibilityRating");
-				Users user = new Users(resultUserName, password, firstName, lastName, rating);
+				System.out.println("getUserFromUserName   " + resultUserName);
+				Persons user = new Persons(resultUserName, password, firstName, lastName);
 				return user;
 			}
 		} catch (SQLException e) {

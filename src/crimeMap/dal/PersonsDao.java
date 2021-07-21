@@ -72,8 +72,8 @@ public class PersonsDao {
 	 * Update the LastName of the Persons instance.
 	 * This runs a UPDATE statement.
 	 */
-	public Persons updateName(Persons person, String newFirstName, String newLastName) throws SQLException {
-		String updatePerson = "UPDATE Persons SET FirstName=?,LastName=? WHERE UserName=?;";
+	public Persons updateUser(Persons person, String newFirstName, String newLastName, String newPassword) throws SQLException {
+		String updatePerson = "UPDATE Persons SET FirstName=?,LastName=?,Password=? WHERE UserName=?;";
 		Connection connection = null;
 		PreparedStatement updateStmt = null;
 		try {
@@ -81,12 +81,14 @@ public class PersonsDao {
 			updateStmt = connection.prepareStatement(updatePerson);
 			updateStmt.setString(1, newFirstName);
 			updateStmt.setString(2, newLastName);
-			updateStmt.setString(3, person.getUserName());
+			updateStmt.setString(3, newPassword);
+			updateStmt.setString(4, person.getUserName());
 			updateStmt.executeUpdate();
 			
 			// Update the person param before returning to the caller.
 			person.setLastName(newLastName);
 			person.setFirstName(newFirstName);
+			person.setPassword(newPassword);
 			return person;
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -1,7 +1,7 @@
 const divflag = document.querySelector(".containAlert");
 
 async function sendflag(){
-	const nm = document.getElementsByName("userName")[0].value;
+	const nm = sessionStorage.getItem('userName');
 	const fn = document.getElementsByName("firstName")[0].value;
 	const ln = document.getElementsByName("lastName")[0].value;
 	const pw1 = document.getElementsByName("passWord")[0].value;
@@ -46,7 +46,7 @@ async function sendflag(){
 			$.ajax({
 				type: "post",
 			    dataType: "text",
-			    url: "signup",	
+			    url: "updateprofile",	
 			    data: {
 			    	userName: nm,
 			    	firstName: fn,
@@ -60,12 +60,12 @@ async function sendflag(){
 
 					if(msg == "1"){
 						divName.className = "alert alert-success alert-dismissible fade show";
-						divName.textContent = "Sign up successful";
+						divName.textContent = "Update successful";
 					}
 					else{
 						console.log("FLAG IS HERE  ", msg);
 						divName.className = "alert alert-danger alert-dismissible fade show";
-						divName.textContent = "User name is already taken";
+						divName.textContent = "You have an exception";
 						/*
 						try to add some html directly:
 						const temp = document.createElement("div");
@@ -80,7 +80,7 @@ async function sendflag(){
 				window.setTimeout(function(){
 					divflag.removeChild(divName);
 				}, 2000);
-				if(msg == "1") window.location.href = "Signin.html";
+				if(msg == "1") window.location.href = "UserPage.html";
 		       },
 		       error:function(err){
 		    	   console.log("error in ajax");
