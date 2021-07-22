@@ -4,20 +4,20 @@ import java.util.Date;
 
 public class CrimeTips {
   protected int crimeTipId;
-  protected Date created;
+  protected Date createdTime;
   protected Date occurredTime;
   protected String address;
   protected String city;
   protected String state;
   protected String zipcode;
   protected String content;
-  protected Users userName;
+  protected Persons userName;
   protected boolean publishedAsReport;
   
-  public CrimeTips(int crimeTipId, Date created, Date occurredTime, String address,String city, String state,
-  String zipcode,String content, Users userName, boolean publishedAsReport) {
+  public CrimeTips(int crimeTipId, Date createdTime, Date occurredTime, String address,String city, String state,
+  String zipcode,String content, Persons userName, boolean publishedAsReport) {
     this.crimeTipId = crimeTipId;
-    this.created = created;
+    this.createdTime = createdTime;
     this.occurredTime = occurredTime;
     this.address = address;
     this.city = city;
@@ -28,21 +28,22 @@ public class CrimeTips {
     this.publishedAsReport = publishedAsReport;
   }
 
-  public CrimeTips(int crimeTipId, Date created, Date occurredTime, String address,
-      String city, String state, String zipcode, String content) {
+  public CrimeTips(int crimeTipId, Date createdTime, Date occurredTime, String address,
+      String city, String state, String zipcode, String content, Persons userName) {
     this.crimeTipId = crimeTipId;
-    this.created = created;
+    this.createdTime = createdTime;
     this.occurredTime = occurredTime;
     this.address = address;
     this.city = city;
     this.state = state;
     this.zipcode = zipcode;
     this.content = content;
+    this.userName = userName;
   }
   
-  public CrimeTips(Date created, Date occurredTime, String address,
+  public CrimeTips(Date createdTime, Date occurredTime, String address,
       String city, String state, String zipcode, String content) {
-    this.created = created;
+    this.createdTime = createdTime;
     this.occurredTime = occurredTime;
     this.address = address;
     this.city = city;
@@ -60,11 +61,11 @@ public class CrimeTips {
   }
 
   public Date getCreated() {
-    return created;
+    return createdTime;
   }
 
-  public void setCreated(Date created) {
-    this.created = created;
+  public void setCreated(Date createdTime) {
+    this.createdTime = createdTime;
   }
 
   public Date getOccurredTime() {
@@ -115,11 +116,11 @@ public class CrimeTips {
     this.content = content;
   }
 
-  public Users getUserName() {
+  public Persons getUserName() {
     return userName;
   }
 
-  public void setUserName(Users userName) {
+  public void setUserName(Persons userName) {
     this.userName = userName;
   }
 

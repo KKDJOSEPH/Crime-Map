@@ -80,6 +80,7 @@ public class CrimeTipsCreate extends HttpServlet {
           String city = req.getParameter("city");
           String state = req.getParameter("state");
           String zipcode = req.getParameter("zipcode");
+//          String userName = req.getParameter("userName");
 
 //          boolean publishedAsReport = req.getParameter("published as report");
 

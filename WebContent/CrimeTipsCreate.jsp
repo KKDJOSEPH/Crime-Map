@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Create a User</title>
+<title>Create a Crime Tip</title>
 </head>
 <body>
 	<h1>Create Crime Tip</h1>

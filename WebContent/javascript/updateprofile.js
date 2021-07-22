@@ -80,7 +80,7 @@ async function sendflag(){
 				window.setTimeout(function(){
 					divflag.removeChild(divName);
 				}, 2000);
-				if(msg == "1") window.location.href = "UserPage.html";
+				window.location.href = "Signin.html";
 		       },
 		       error:function(err){
 		    	   console.log("error in ajax");
