@@ -54,7 +54,7 @@ public class AdministratorsDao extends PersonsDao{
 	public Administrators updateName(Administrators administrator, String newFirstName, String newLastName) throws SQLException {
 		// The field to update only exists in the superclass table, so we can
 		// just call the superclass method.
-		super.updateName(administrator, newFirstName, newLastName);
+		updateName(administrator, newFirstName, newLastName);
 		return administrator;
 	}
 
