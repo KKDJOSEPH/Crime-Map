@@ -1,0 +1,31 @@
+/*
+ *	Author: Yan Yan
+ */
+
+@charset "UTF-8";
+
+header {
+	background-color: #24292e;
+    color: #fff;
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 10px;
+    z-index: 32;
+}
+
+
+header .nav-link {
+	color: #fff;
+}
+
+nav {
+	display: flex;
+}
+
+nav img {
+	width: 160px;
+}
+
+.logo {
+	margin-right: 40px;
+}

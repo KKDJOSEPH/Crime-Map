@@ -1,10 +1,47 @@
+
+<!--  Author: Yan Yan -->
+
+ 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="./stylesheets/header.css" />
+    <link rel="stylesheet" type="text/css" href="./stylesheets/heatmap.css" />
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css" />
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 </head>
 <body>
-
+	<header>
+		<nav>
+			<div class="logo">
+				<img src="./images/map_logo.jpg" />
+			</div>
+			<ul class="nav">
+			  <li class="nav-item">
+			    <a class="nav-link" aria-current="page" href="/Seattle_Crime_Map/index.html">Home</a>
+			  </li>
+			  <li class="nav-item">
+			    <a class="nav-link active" aria-current="page" href="/Seattle_Crime_Map/heatmap.html">Map</a>
+			  </li>
+			</ul>
+		</nav>
+	</header>
+	
+    <main class="main">
+    	<div id="floating-panel">
+	      <button id="toggle-heatmap">Toggle Heatmap</button>
+	      <button id="change-gradient">Change gradient</button>
+	      <button id="change-radius">Change radius</button>
+	      <button id="change-opacity">Change opacity</button>
+	    </div>
+    	<div id="map"></div>
+    </main>
+	
+	 <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFimWZwIvDnYDZS0pKqz25yCBY10DTzm4&signed_in=true&libraries=visualization&callback=initMap">
+	</script>
+	 <script src="./javascript/heatmap.js"></script>
 </body>
 </html>
