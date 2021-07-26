@@ -82,6 +82,56 @@ public class CrimeTipsDao {
     }
   }
   
+  public CrimeTips getCrimeTipsById(int crimeTipId) throws SQLException {
+	    String selectCrimeTip =
+	      "SELECT CrimeTipId,CreatedTime,OccurredTime,Address,City,State,Zipcode,Content " +
+	      "FROM CrimeTips " +
+	      "WHERE CrimeTipId=?;";
+	    
+	    Connection connection = null;
+	    PreparedStatement selectStmt = null;
+	    ResultSet results = null;
+	    
+	    try {
+	      connection = connectionManager.getConnection();
+	      selectStmt = connection.prepareStatement(selectCrimeTip);
+	      selectStmt.setInt(1, crimeTipId);
+	      
+	      results = selectStmt.executeQuery();
+	      
+	      if(results.next()) {
+	        Date createdTime = new Date(results.getTimestamp("CreatedTime").getTime());
+	        Date occurredTime = new Date(results.getTimestamp("OccurredTime").getTime());
+	        String address = results.getString("Address");    
+	        String city = results.getString("City");
+	        String state = results.getString("State");    
+	        String zipcode = results.getString("Zipcode");
+	        String content = results.getString("Content");
+	        
+	        CrimeTips crimeTip = new CrimeTips(createdTime,occurredTime, address, city, state,
+	            zipcode, content);
+	        crimeTip.setCrimeTipId(crimeTipId);
+	        
+	        return crimeTip;
+	      }
+	      
+	    } catch (SQLException e) {
+	      e.printStackTrace();
+	      throw e;
+	    } finally {
+	      if(connection != null) {
+	        connection.close();
+	      }
+	      if(selectStmt != null) {
+	        selectStmt.close();
+	      }
+	      if(results != null) {
+	        results.close();
+	      }
+	    }
+	    return null;
+	  }
+  
   public CrimeTips getCrimeTipsByContent(String content) throws SQLException {
     String selectCrimeTip =
       "SELECT CreatedTime,OccurredTime,Address,City,State,Zipcode,Content " +
