@@ -8,14 +8,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Find Reports By Date</title>
+<title>Find a Report By Id</title>
 </head>
 <body>
-	<form action="findreports" method="post">
-		<h1>Search for a Report by Date</h1>
+	<form action="findreportbyid" method="post">
+		<h1>Search for a Report by ID</h1>
 		<p>
-			<label for="date">Date (YYYY-MM-DD)</label>
-			<input id="date" name="date" value="${fn:escapeXml(param.date)}">
+			<label for="reportid">Report ID</label>
+			<input id="reportid" name="reportid" value="${fn:escapeXml(param.reportid)}">
 		</p>
 		<p>
 			<input type="submit">
@@ -25,7 +25,7 @@
 	</form>
 	<br/>
 	<br/>
-	<h1>Matching Reports</h1>
+	<h1>Matching Report</h1>
         <table border="1">
             <tr>
                 <th>ReportId</th>
@@ -34,15 +34,13 @@
                 <th>ReportTime</th>
                 <th>CrimeTipId</th>
             </tr>
-            <c:forEach items="${reports}" var="reports" >
                 <tr>
-                	<td><c:out value="${reports.getReportId()}"/></td>
-                    <td><c:out value="${reports.getLatitude()}" /></td>
-                    <td><c:out value="${reports.getLongitude()}" /></td>
-					<td><fmt:formatDate value="${reports.getReportTime()}" pattern="yyyy-MM-dd"/></td>
-                    <td><c:out value="${reports.getCrimeTipId()}" /></td>
+                	<td><c:out value="${report.getReportId()}"/></td>
+                    <td><c:out value="${report.getLatitude()}" /></td>
+                    <td><c:out value="${report.getLongitude()}" /></td>
+					<td><fmt:formatDate value="${report.getReportTime()}" pattern="yyyy-MM-dd"/></td>
+                    <td><c:out value="${report.getCrimeTipId()}" /></td>
                 </tr>
-            </c:forEach>
        </table>
 </body>
 </html>

@@ -126,5 +126,53 @@ public class ReportsDao {
 	    return reports;
 	  }
 	  
+	  public Reports getReportById(int reportId) throws SQLException {
+		    String selectReports =
+		      "SELECT ReportId,Latitude,Longitude,ReportTime,PublishedAsReport,CrimeTipId " +
+		      "FROM Reports " +
+		      "WHERE ReportId = ?;";
+		    
+		    Connection connection = null;
+		    PreparedStatement selectStmt = null;
+		    ResultSet results = null;
+		    
+		    try {
+		      CrimeTipsDao crimeTipsDao = CrimeTipsDao.getInstance();
+		      connection = connectionManager.getConnection();
+		      selectStmt = connection.prepareStatement(selectReports);
+		      selectStmt.setInt(1, reportId);
+		      
+		      results = selectStmt.executeQuery();
+		      
+		      if (results.next()) {
+		    	double latitude = results.getDouble("Latitude");
+		    	double longitude = results.getDouble("Longitude");
+		    	Date reportTime = new Date(results.getTimestamp("ReportTime").getTime());
+		    	boolean publishedAsReport = results.getBoolean("PublishedAsReport");
+		    	int crimeTipId = results.getInt("CrimeTipId");
+		        
+		        Reports report = new Reports(reportId, latitude, longitude, reportTime,
+		        		publishedAsReport, crimeTipsDao.getCrimeTipsById(crimeTipId));
+		        
+		        return report;
+		      }
+		      
+		    } catch (SQLException e) {
+		      e.printStackTrace();
+		      throw e;
+		    } finally {
+		      if(connection != null) {
+		        connection.close();
+		      }
+		      if(selectStmt != null) {
+		        selectStmt.close();
+		      }
+		      if(results != null) {
+		        results.close();
+		      }
+		    }
+		    return null;
+		  }
+	  
 	 
 }
