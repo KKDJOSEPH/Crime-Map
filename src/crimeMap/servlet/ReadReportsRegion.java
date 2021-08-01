@@ -18,10 +18,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/readreports")
-public class ReadReports extends HttpServlet {
-  protected ReportsDao reportsDao;
-  
+@WebServlet("/readreportsRegion")
+public class ReadReportsRegion extends HttpServlet {
+	protected ReportsDao reportsDao;
+	  
   @Override
   public void init() throws ServletException {
     reportsDao = ReportsDao.getInstance();
@@ -30,52 +30,38 @@ public class ReadReports extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
-    // Map for storing messages.
         Map<String, String> messages = new HashMap<String, String>();
         req.setAttribute("messages", messages);
-
         List<Reports> reports = new ArrayList<Reports>();
-        
-        // Retrieve and validate name.
-        // content is retrieved from the URL query string.
-        Integer content =  Integer.parseInt(req.getParameter("content"));
-        //Date content = Date.valueOf(contentUnformatted);
+        String content = req.getParameter("content");
         if (content.equals(null)) {
             messages.put("success", "Please enter valid date");
         } else {
           try {
-            reports = reportsDao.getReportsByReportId(content);
+            reports = reportsDao.getReportsByRegion(content);
             } catch (SQLException e) {
           e.printStackTrace();
           throw new IOException(e);
             }
           messages.put("success", "Displaying results for " + content);
-          // Save the previous search term, so it can be used as the default
-          // in the input box when rendering FindCrimeTips.jsp.
-          messages.put("previousContent", content.toString());
+          messages.put("previousContent", content);
         }
         req.setAttribute("reports", reports);
-        
-        req.getRequestDispatcher("/ReadReports.jsp").forward(req, resp);
+        req.getRequestDispatcher("/ReadReportsRegion.jsp").forward(req, resp);
   }
   
   @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp)
         throws ServletException, IOException {
-        // Map for storing messages.
         Map<String, String> messages = new HashMap<String, String>();
         req.setAttribute("messages", messages);
-
         List<Reports> reports = new ArrayList<Reports>();
-        
         String content =  req.getParameter("content");
-        int contentInt = Integer.parseInt(content);
-        //Date content = Date.valueOf(contentUnformatted);
-        if (content == null) {
-            messages.put("success", "Please enter a valid date");
+        if (content.equals(null)) {
+            messages.put("success", "Please enter a valid Region");
         } else {
           try {
-        	  reports = reportsDao.getReportsByReportId(contentInt);
+        	  reports = reportsDao.getReportsByRegion(content);
             } catch (SQLException e) {
           e.printStackTrace();
           throw new IOException(e);
@@ -84,6 +70,6 @@ public class ReadReports extends HttpServlet {
         }
         req.setAttribute("reports", reports);
         
-        req.getRequestDispatcher("/ReadReports.jsp").forward(req, resp);
+        req.getRequestDispatcher("/ReadReportsRegion.jsp").forward(req, resp);
     }
 }

@@ -34,16 +34,13 @@ public class ReportsDao {
 	    String insertReport =
 	      "INSERT INTO Reports(Latitude,Longitude,ReportTime,PublishedAsReport,CrimeTipId) " +
 	      "VALUES(?,?,?,?,?);";
-	    
 	    Connection connection = null;
 	    PreparedStatement insertStmt = null;
 	    ResultSet resultKey = null;
-	    
 	    try {
 	      connection = connectionManager.getConnection();
 	      insertStmt = connection.prepareStatement(insertReport,
 	        Statement.RETURN_GENERATED_KEYS);
-	      
 	      insertStmt.setDouble(1, reports.getLatitude());
 	      insertStmt.setDouble(2, reports.getLongitude());
 	      insertStmt.setTimestamp(3, new Timestamp(reports.getReportTime().getTime()));
@@ -85,40 +82,24 @@ public class ReportsDao {
 	      "SELECT ReportId,Latitude,Longitude,ReportTime,PublishedAsReport,CrimeTipId " +
 	      "FROM Reports " +
 	      "WHERE DATE(ReportTime) = ?;";
-	    
-//	      "SELECT Reports.ReportId,Latitude,Longitude,ReportTime,Region,OffenseType,OffenseParentGroup " +
-//	      "FROM Reports INNER JOIN RegionCategory ON Reports.ReportId = RegionCategory.ReportId " +
-//	      "INNER JOIN OffenseParentGroup ON Reports.ReportId =  OffenseParentGroup.ReportId " +
-//	      "INNER JOIN OffenseType ON Reports.ReportId =  OffenseType.ReportId " +
-//	      "WHERE DATE(ReportTime) = ? " +
-//	      "GROUP BY Reports.ReportId;";
-	    
 	    Connection connection = null;
 	    PreparedStatement selectStmt = null;
 	    ResultSet results = null;
 	    List<Reports> reports = new ArrayList<Reports>();
-	    
 	    try {
 	      ReportsDao reportsDao = ReportsDao.getInstance();
 	      connection = connectionManager.getConnection();
 	      selectStmt = connection.prepareStatement(selectReports);
 	      selectStmt.setDate(1, date);
-	      
 	      results = selectStmt.executeQuery();
-	      
 	      while (results.next()) {
-	    	  
-		    int reportId = results.getInt("ReportId");
-		    double latitude = results.getDouble("Latitude");
-		    double longitude = results.getDouble("Longitude");
-		    Date reportTime = new Date(results.getTimestamp("ReportTime").getTime());
-		    RegionCategory.Region region = RegionCategory.Region.valueOf(results.getString("Region").replaceAll(" ", "_").replaceAll("/",  "_").replaceAll("-",  "_").toUpperCase());
-		    OffenseType.Type offenseType = OffenseType.Type.valueOf(results.getString("OffenseType").replaceAll(" ", "_").replaceAll("/",  "_").replaceAll("-",  "_").toUpperCase());
-		    OffenseParentGroup.ParentGroup offenseParentGroup = OffenseParentGroup.ParentGroup.valueOf(results.getString("OffenseParentGroup").replaceAll("/",  "_").replaceAll("-",  "_").replaceAll(" ", "_").toUpperCase());
-
-	    	  
-	    	  
-	        Reports report = new Reports(reportId, latitude, longitude, reportTime, RegionCategory.Region.ALASKA_JUNCTION, OffenseType.Type.AGGRAVATED_ASSAULT, OffenseParentGroup.ParentGroup.ANIMAL_CRUELTY);
+			    int resultsReportId = results.getInt("ReportId");
+			    double latitude = results.getDouble("Latitude");
+			    double longitude = results.getDouble("Longitude");
+			    Date reportTime = new Date(results.getTimestamp("ReportTime").getTime());
+			    boolean reportPublished = results.getBoolean("PublishedAsReport");
+			    int reportCrimeTipId = results.getInt("CrimeTipid");
+	        Reports report = new Reports(resultsReportId, latitude, longitude, reportTime, reportPublished, reportCrimeTipId);
 	        reports.add(report);
 	      }
 	      
@@ -142,38 +123,26 @@ public class ReportsDao {
 	  
 	  public List<Reports> getReportsByRegion(String region) throws SQLException {
 		    String selectReports =
-		      "SELECT Reports.ReportId,Reports.Latitude,Reports.Longitude,ReportTime,PublishedAsReport,CrimeTipId " +
+		      "SELECT Reports.ReportId,Reports.Latitude,Reports.Longitude,ReportTime,PublishedAsReport,CrimeTipId,Region " +
 			  "FROM Reports INNER JOIN RegionCategory ON Reports.ReportId = RegionCategory.ReportId " +
 		      "WHERE Region = ?;";
-
 		    Connection connection = null;
 		    PreparedStatement selectStmt = null;
 		    ResultSet results = null;
 		    List<Reports> reports = new ArrayList<Reports>();
-		    
 		    try {
 		      ReportsDao reportsDao = ReportsDao.getInstance();
 		      connection = connectionManager.getConnection();
 		      selectStmt = connection.prepareStatement(selectReports);
 		      selectStmt.setString(1, region);
-		      
 		      results = selectStmt.executeQuery();
-		      
 		      while (results.next()) {
-		    	  
 			    int reportId = results.getInt("ReportId");
 			    double latitude = results.getDouble("Latitude");
 			    double longitude = results.getDouble("Longitude");
 			    Date reportTime = new Date(results.getTimestamp("ReportTime").getTime());
 			    boolean reportPublished = results.getBoolean("PublishedAsReport");
 			    int reportCrimeTipId = results.getInt("CrimeTipid");
-			    
-			    // RegionCategory.Region region = RegionCategory.Region.valueOf(results.getString("Region").replaceAll(" ", "_").replaceAll("/",  "_").replaceAll("-",  "_").toUpperCase());
-			    // OffenseType.Type offenseType = OffenseType.Type.valueOf(results.getString("OffenseType").replaceAll(" ", "_").replaceAll("/",  "_").replaceAll("-",  "_").toUpperCase());
-			    // OffenseParentGroup.ParentGroup offenseParentGroup = OffenseParentGroup.ParentGroup.valueOf(results.getString("OffenseParentGroup").replaceAll("/",  "_").replaceAll("-",  "_").replaceAll(" ", "_").toUpperCase());
-
-		    	  
-		    	  
 		        Reports report = new Reports(reportId, latitude, longitude, reportTime, reportPublished, reportCrimeTipId);
 		        reports.add(report);
 		      }
@@ -200,35 +169,23 @@ public class ReportsDao {
 		      "SELECT ReportId,Latitude,Longitude,ReportTime,PublishedAsReport,CrimeTipId " +
 		      "FROM Reports " +
 		      "WHERE ReportId = ?;";
-
 		    Connection connection = null;
 		    PreparedStatement selectStmt = null;
 		    ResultSet results = null;
 		    List<Reports> reports = new ArrayList<Reports>();
-		    
 		    try {
 		      ReportsDao reportsDao = ReportsDao.getInstance();
 		      connection = connectionManager.getConnection();
 		      selectStmt = connection.prepareStatement(selectReports);
 		      selectStmt.setInt(1, reportId);
-		      
 		      results = selectStmt.executeQuery();
-		      
 		      while (results.next()) {
-		    	  
 			    int resultsReportId = results.getInt("ReportId");
 			    double latitude = results.getDouble("Latitude");
 			    double longitude = results.getDouble("Longitude");
 			    Date reportTime = new Date(results.getTimestamp("ReportTime").getTime());
 			    boolean reportPublished = results.getBoolean("PublishedAsReport");
 			    int reportCrimeTipId = results.getInt("CrimeTipid");
-			    
-			    // RegionCategory.Region region = RegionCategory.Region.valueOf(results.getString("Region").replaceAll(" ", "_").replaceAll("/",  "_").replaceAll("-",  "_").toUpperCase());
-			    // OffenseType.Type offenseType = OffenseType.Type.valueOf(results.getString("OffenseType").replaceAll(" ", "_").replaceAll("/",  "_").replaceAll("-",  "_").toUpperCase());
-			    // OffenseParentGroup.ParentGroup offenseParentGroup = OffenseParentGroup.ParentGroup.valueOf(results.getString("OffenseParentGroup").replaceAll("/",  "_").replaceAll("-",  "_").replaceAll(" ", "_").toUpperCase());
-
-		    	  
-		    	  
 		        Reports report = new Reports(resultsReportId, latitude, longitude, reportTime, reportPublished, reportCrimeTipId);
 		        reports.add(report);
 		      }

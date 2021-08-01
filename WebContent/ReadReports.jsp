@@ -12,54 +12,19 @@
 </head>
 <body>
 	<form action="readreports" method="post">
-		<h1>Search For Reports.</h1>
-		<p>
-			<label for="content">Search by ReoportId:</label>
-			<input id="content" name="content" value="${fn:escapeXml(param.content)}">
-		</p>
-		<p>
-			<input type="submit">
-			<br/><br/><br/>
-			<span id="successMessage"><b>${messages.success}</b></span>
-		</p>
-<%-- 		<p>
-			<label for="content">SearchByDate:</label>
-			<input id="content" name="content" value="${fn:escapeXml(param.content)}">
-		</p>
-		<p>
-			<input type="submit">
-			<br/><br/><br/>
-			<span id="successMessage"><b>${messages.success}</b></span>
-		</p> --%>
+		<h1>Choose A Search Option Below:</h1>
 	</form>
 	<br/>
-	<div id="userPage"><a href="UserPage.html">View User Page</a></div>
+	<div id="searchById"><a href="ReadReportsId.jsp">Search Reports By ReportId</a></div>
 	<br/>
-	<h1>Matching Reports</h1>
-        <table border="1">
-            <tr>
-                <th>ReportId</th>
-                <th>Latitude</th>
-                <th>Longitude</th>
-                <th>ReportTime</th>
-<!--                 <th>Region</th> -->
-                <th>PublishedAsReport</th>
-<!--                 <th>OffenseType</th>
-                <th>OffenseParentGroup</th> -->
-
-            </tr>
-            <c:forEach items="${reports}" var="reports" >
-                <tr>
-                	<td><c:out value="${reports.getReportId()}" /></td>
-                	<td><c:out value="${reports.getLatitude()}" /></td>
-                    <td><c:out value="${reports.getLongitude()}" /></td>
-                	<td><fmt:formatDate value="${reports.getReportTime()}" pattern="yyyy-MM-dd"/></td>
-<%--                  	<td><c:out value="${content.toString()}" /></td> --%>
-                    <td><c:out value="${reports.isPublishedAsReport()}" /></td>
-<%--                 	<td><c:out value="${reports.getOffenseType()}" /></td>
-                    <td><c:out value="${reports.getOffenseParentGroup()}" /></td> --%>
-                </tr>
-            </c:forEach>
-       </table>
+	<br/>
+	<div id="searchByRegion"><a href="ReadReportsRegion.jsp">Search Reports By Region</a></div>
+	<br/>
+	<br/>
+	<div id="searchByDate"><a href="ReadReportsDate.jsp">Search Reports By Date</a></div>
+	<br/>
+	<br/>
+	<br/>
+	<div id="return"><a href="UserPage.html">Return to UserPage.</a></div>
 </body>
 </html>
