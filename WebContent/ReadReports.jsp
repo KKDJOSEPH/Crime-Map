@@ -26,5 +26,24 @@
 	<br/>
 	<br/>
 	<div id="return"><a href="UserPage.html">Return to UserPage.</a></div>
+	
+	<h1>Create Comment</h1>
+	<form action="commentscreate" method="post">
+		<p>
+			<label for="created">Created (yyyy-mm-dd)</label>
+			<input id="created" name="created" value="">
+		</p>
+		<p>
+			<label for="content">Content</label>
+			<input id="content" name="content" value="">
+		</p>
+		<p>
+			<input type="submit">
+		</p>
+	</form>
+	<br/><br/>
+	<p>
+		<span id="successMessage"><b>${messages.success}</b></span>
+	</p>
 </body>
 </html>
