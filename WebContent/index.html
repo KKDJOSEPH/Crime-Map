@@ -3,6 +3,10 @@
 <head>
 	<meta charset="UTF-8" />
   	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  	<link rel="stylesheet" type="text/css" href="./stylesheets/header.css" />
+    <link rel="stylesheet" type="text/css" href="./stylesheets/heatmap.css" />
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css" />
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
   	<link rel="stylesheet" type="text/css" href="./stylesheets/Home.css" />
   	<link
     	href="./css/bootstrap.min.css"
@@ -11,19 +15,34 @@
   	<script src="./jquery-3.5.1.min.js"></script>
   	<script src="./jquery-3.5.1.js"></script>
   	<title>HomePage</title>
-  	<meta name="author" content="Haoyang Ding" />
+  	<meta name="author" content="Haoyang Ding, Yan Yan" />
   	<link href="./images/icon.jpg" type="image/x-icon" rel="icon" />
 </head>
 <body>
-	<div>
-		<div class="Main">
-			<nav class="nav">
-				<a class="nav-link active" href="index.html">Home</a>
-				<a class="nav-link active" href="Signin.html">Sign In</a>
-				<a class="nav-link active" href="Signup.html">Sign Up</a>
-			</nav>
-		</div>
-	</div>
+	<header>
+		<nav>
+			<div class="logo">
+				<a href="index.html"> <img src="./images/map_logo.jpg" /> </a>
+			</div>
+			<a class="nav-link active" href="index.html">Home</a>
+			<a class="nav-link active" href="Signin.html">Sign In</a>
+			<a class="nav-link active" href="Signup.html">Sign Up</a>
+		</nav>
+	</header>
+	<main class="main">
+    	<div id="floating-panel">
+	      <button id="toggle-heatmap">Toggle Heatmap</button>
+	      <button id="change-gradient">Change gradient</button>
+	      <button id="change-radius">Change radius</button>
+	      <button id="change-opacity">Change opacity</button>
+	    </div>
+    	<div id="map"></div>
+    </main>
+	
+	 <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFimWZwIvDnYDZS0pKqz25yCBY10DTzm4&signed_in=true&libraries=visualization&callback=initMap">
+	</script>
+	 <script src="./javascript/heatmap.js"></script>
 <script src="./js/bootstrap.min.js"></script>
 <script src="./javascript/signin.js"></script>
 </body>

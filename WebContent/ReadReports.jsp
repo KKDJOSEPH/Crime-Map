@@ -10,7 +10,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
   	<link rel="stylesheet" type="text/css" href="./stylesheets/header.css" />
     <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css" />
-<title>Update a Crime Tip</title>
+<title>Search for Reports</title>
 </head>
 <body>
 	 <header>
@@ -23,15 +23,31 @@
 			<a class="nav-link active" href="ReadReports.jsp">Reports</a>
 		</nav>
 	</header>
-	<h1>Update Crime Tip</h1>
-	<form action="crimetipsupdate" method="post">
+	<form action="readreports" method="post">
+		<h1>Choose A Search Option Below:</h1>
+	</form>
+	<br/>
+	<div id="searchById"><a href="ReadReportsId.jsp">Search Reports By ReportId</a></div>
+	<br/>
+	<br/>
+	<div id="searchByRegion"><a href="ReadReportsRegion.jsp">Search Reports By Region</a></div>
+	<br/>
+	<br/>
+	<div id="searchByDate"><a href="ReadReportsDate.jsp">Search Reports By Date</a></div>
+	<br/>
+	<br/>
+	<br/>
+	<div id="return"><a href="UserPage.html">Return to UserPage.</a></div>
+	
+	<h1>Create Comment</h1>
+	<form action="commentscreate" method="post">
 		<p>
-			<label for="content">Content</label>
-			<input id="content" name="content" value="${fn:escapeXml(param.content)}">
+			<label for="created">Created (yyyy-mm-dd)</label>
+			<input id="created" name="created" value="">
 		</p>
 		<p>
-			<label for="address">New Address</label>
-			<input id="address" name="address" value="">
+			<label for="content">Content</label>
+			<input id="content" name="content" value="">
 		</p>
 		<p>
 			<input type="submit">
@@ -41,6 +57,7 @@
 	<p>
 		<span id="successMessage"><b>${messages.success}</b></span>
 	</p>
+	<script src="./js/bootstrap.min.js"></script>
 	<script src="./js/bootstrap.min.js"></script>
 </body>
 </html>

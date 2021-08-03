@@ -8,9 +8,21 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+  	<link rel="stylesheet" type="text/css" href="./stylesheets/header.css" />
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css" />
 <title>Create a Crime Tip</title>
 </head>
 <body>
+	 <header>
+		<nav>
+			<div class="logo">
+				<a href="index.html"> <img src="./images/map_logo.jpg" /> </a>
+			</div>
+			<a class="nav-link active" href="index.html">Home</a>
+			<a class="nav-link active" href="FindCrimeTips.jsp">CrimeTips</a>
+			<a class="nav-link active" href="ReadReports.jsp">Reports</a>
+		</nav>
+	</header>
 	<h1>Create Crime Tip</h1>
 	<form action="crimetipscreate" method="post">
 		<p>
@@ -49,5 +61,6 @@
 	<p>
 		<span id="successMessage"><b>${messages.success}</b></span>
 	</p>
+	<script src="./js/bootstrap.min.js"></script>
 </body>
 </html>

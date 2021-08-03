@@ -10,7 +10,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
   	<link rel="stylesheet" type="text/css" href="./stylesheets/header.css" />
     <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css" />
-<title>Find a CrimeTip</title>
+<title>Search for Reports</title>
 </head>
 <body>
 	 <header>
@@ -23,43 +23,38 @@
 			<a class="nav-link active" href="ReadReports.jsp">Reports</a>
 		</nav>
 	</header>
-	<form action="findcrimetips" method="post">
-		<h1>Search for a CrimeTip by Content</h1>
+	<form action="readreportsDate" method="post">
+		<h1>Search For Reports By Date.</h1>
 		<p>
-			<label for="content">Content</label>
+			<label for="content">Enter a Date(yyyy-MM-dd):</label>
 			<input id="content" name="content" value="${fn:escapeXml(param.content)}">
 		</p>
 		<p>
 			<input type="submit">
-			<br/><br/><br/>
+			<br/><br/>
 			<span id="successMessage"><b>${messages.success}</b></span>
 		</p>
 	</form>
 	<br/>
-	<div id="crimeTipsCreate"><a href="crimetipscreate">Create CrimeTips</a></div>
+	<div id="readReports"><a href="ReadReports.jsp">Return to Reports Search page.</a></div>
 	<br/>
-	<h1>Matching CrimeTips</h1>
+	<h1>Matching Reports</h1>
         <table border="1">
             <tr>
-                <th>CreatedTime</th>
-                <th>OccurredTime</th>
-                <th>Address</th>
-                <th>City</th>
-                <th>State</th>
-                <th>Zipcode</th>
-                <th>Content</th>
-                <th>Update CrimeTips</th>
+                <th>ReportId</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th>ReportTime</th>
+                <th>PublishedAsReport</th>
+
             </tr>
-            <c:forEach items="${crimeTips}" var="crimeTips" >
+            <c:forEach items="${reports}" var="reports" >
                 <tr>
-                	<td><fmt:formatDate value="${crimeTips.getCreated()}" pattern="yyyy-MM-dd"/></td>
-                	<td><fmt:formatDate value="${crimeTips.getOccurredTime()}" pattern="yyyy-MM-dd"/></td>
-                    <td><c:out value="${crimeTips.getAddress()}" /></td>
-                    <td><c:out value="${crimeTips.getCity()}" /></td>
-                    <td><c:out value="${crimeTips.getState()}" /></td>
-                    <td><c:out value="${crimeTips.getZipcode()}" /></td>
-                    <td><c:out value="${crimeTips.getContent()}" /></td>
-                    <td><a href="crimetipsupdate?content=<c:out value="${crimeTips.getContent()}"/>">Update</a></td>
+                	<td><c:out value="${reports.getReportId()}" /></td>
+                	<td><c:out value="${reports.getLatitude()}" /></td>
+                    <td><c:out value="${reports.getLongitude()}" /></td>
+                	<td><fmt:formatDate value="${reports.getReportTime()}" pattern="yyyy-MM-dd"/></td>
+                    <td><c:out value="${reports.isPublishedAsReport()}" /></td>
                 </tr>
             </c:forEach>
        </table>
