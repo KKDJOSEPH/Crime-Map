@@ -1,7 +1,9 @@
 html,
 body {
   margin: 0px;
+  color: #3c240f;
 }
+
 
 .SignIn {
   background: url(../images/crime.png) center center / cover no-repeat;
@@ -11,7 +13,7 @@ body {
 .signcard {
   background-color: #faf9de;
   opacity: 1;
-  height: 475px;
+  height: 40 rem;
   width: 300px;
   margin-top: auto;
   margin-bottom: auto;
@@ -23,6 +25,7 @@ body {
 
 .card-body {
   color: #3c240f;
+  height: 30rem;
 }
 
 .container-fluid {
@@ -33,22 +36,4 @@ body {
 a {
   font-family: "Roboto", sans-serif;
   color: brown;
-}
-
-.nav{
-	background-color: #24292e;
-    color: #fff;
-    font-size: 14px;
-    line-height: 1.5;
-    padding: 10px;
-    z-index: 32;
-}
-
-nav img {
-	width: 16px;
-}
-
-.logo {
-	width: 100%;
-	margin-right: 40px;
 }

@@ -45,7 +45,7 @@ public class ReportsDao {
 	      insertStmt.setDouble(2, reports.getLongitude());
 	      insertStmt.setTimestamp(3, new Timestamp(reports.getReportTime().getTime()));
 	      insertStmt.setBoolean(4, reports.isPublishedAsReport());
-	      insertStmt.setInt(5, reports.getCrimeTip().getCrimeTipId());
+	      insertStmt.setInt(5, reports.getCrimeTipId());
 	      
 	      insertStmt.executeUpdate();
 	      
@@ -78,54 +78,47 @@ public class ReportsDao {
 	  }
 	  
 	  public List<Reports> getReportsByDate(Date date) throws SQLException {
-		    String selectReports =
-		      "SELECT ReportId,Latitude,Longitude,ReportTime,PublishedAsReport,CrimeTipId " +
-		      "FROM Reports " +
-		      "WHERE DATE(ReportTime) = ?;";
-		    
-		    Connection connection = null;
-		    PreparedStatement selectStmt = null;
-		    ResultSet results = null;
-		    List<Reports> reports = new ArrayList<>();
-		    
-		    try {
-		      CrimeTipsDao crimeTipsDao = CrimeTipsDao.getInstance();
-		      connection = connectionManager.getConnection();
-		      selectStmt = connection.prepareStatement(selectReports);
-		      selectStmt.setDate(1, date);
-		      
-		      results = selectStmt.executeQuery();
-		      
-		      while (results.next()) {
-		    	int reportId = results.getInt("ReportId");
-		    	double latitude = results.getDouble("Latitude");
-		    	double longitude = results.getDouble("Longitude");
-		    	Date reportTime = new Date(results.getTimestamp("ReportTime").getTime());
-		    	boolean publishedAsReport = results.getBoolean("PublishedAsReport");
-		    	int crimeTipId = results.getInt("CrimeTipId");
-		        
-		        Reports report = new Reports(reportId, latitude, longitude, reportTime,
-		        		publishedAsReport, crimeTipsDao.getCrimeTipsById(crimeTipId));
-		        
-		        reports.add(report);
-		      }
-		      
-		    } catch (SQLException e) {
-		      e.printStackTrace();
-		      throw e;
-		    } finally {
-		      if(connection != null) {
-		        connection.close();
-		      }
-		      if(selectStmt != null) {
-		        selectStmt.close();
-		      }
-		      if(results != null) {
-		        results.close();
-		      }
-		    }
-		    return reports;
-		  }
+	    String selectReports =
+	      "SELECT ReportId,Latitude,Longitude,ReportTime,PublishedAsReport,CrimeTipId " +
+	      "FROM Reports " +
+	      "WHERE DATE(ReportTime) = ?;";
+	    Connection connection = null;
+	    PreparedStatement selectStmt = null;
+	    ResultSet results = null;
+	    List<Reports> reports = new ArrayList<Reports>();
+	    try {
+	      ReportsDao reportsDao = ReportsDao.getInstance();
+	      connection = connectionManager.getConnection();
+	      selectStmt = connection.prepareStatement(selectReports);
+	      selectStmt.setDate(1, date);
+	      results = selectStmt.executeQuery();
+	      while (results.next()) {
+			    int resultsReportId = results.getInt("ReportId");
+			    double latitude = results.getDouble("Latitude");
+			    double longitude = results.getDouble("Longitude");
+			    Date reportTime = new Date(results.getTimestamp("ReportTime").getTime());
+			    boolean reportPublished = results.getBoolean("PublishedAsReport");
+			    int reportCrimeTipId = results.getInt("CrimeTipid");
+	        Reports report = new Reports(resultsReportId, latitude, longitude, reportTime, reportPublished, reportCrimeTipId);
+	        reports.add(report);
+	      }
+	      
+	    } catch (SQLException e) {
+	      e.printStackTrace();
+	      throw e;
+	    } finally {
+	      if(connection != null) {
+	        connection.close();
+	      }
+	      if(selectStmt != null) {
+	        selectStmt.close();
+	      }
+	      if(results != null) {
+	        results.close();
+	      }
+	    }
+	    return reports;
+	  }
 	  
 	  
 	  public List<Reports> getReportsByRegion(String region) throws SQLException {
@@ -138,7 +131,6 @@ public class ReportsDao {
 		    ResultSet results = null;
 		    List<Reports> reports = new ArrayList<Reports>();
 		    try {
-		      CrimeTipsDao crimeTipsDao = CrimeTipsDao.getInstance();
 		      ReportsDao reportsDao = ReportsDao.getInstance();
 		      connection = connectionManager.getConnection();
 		      selectStmt = connection.prepareStatement(selectReports);
@@ -151,7 +143,7 @@ public class ReportsDao {
 			    Date reportTime = new Date(results.getTimestamp("ReportTime").getTime());
 			    boolean reportPublished = results.getBoolean("PublishedAsReport");
 			    int reportCrimeTipId = results.getInt("CrimeTipid");
-		        Reports report = new Reports(reportId, latitude, longitude, reportTime, reportPublished,  crimeTipsDao.getCrimeTipsById(reportCrimeTipId));
+		        Reports report = new Reports(reportId, latitude, longitude, reportTime, reportPublished, reportCrimeTipId);
 		        reports.add(report);
 		      }
 		      
@@ -182,7 +174,6 @@ public class ReportsDao {
 		    ResultSet results = null;
 		    List<Reports> reports = new ArrayList<Reports>();
 		    try {
-		      CrimeTipsDao crimeTipsDao = CrimeTipsDao.getInstance();
 		      ReportsDao reportsDao = ReportsDao.getInstance();
 		      connection = connectionManager.getConnection();
 		      selectStmt = connection.prepareStatement(selectReports);
@@ -195,7 +186,7 @@ public class ReportsDao {
 			    Date reportTime = new Date(results.getTimestamp("ReportTime").getTime());
 			    boolean reportPublished = results.getBoolean("PublishedAsReport");
 			    int reportCrimeTipId = results.getInt("CrimeTipid");
-		        Reports report = new Reports(resultsReportId, latitude, longitude, reportTime, reportPublished, crimeTipsDao.getCrimeTipsById(reportCrimeTipId));
+		        Reports report = new Reports(resultsReportId, latitude, longitude, reportTime, reportPublished, reportCrimeTipId);
 		        reports.add(report);
 		      }
 		      

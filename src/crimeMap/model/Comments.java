@@ -9,9 +9,17 @@ public class Comments {
   protected Reports reportId;
   protected Users userName;
   
-  public Comments(Date created, String content) {
+  public Comments(int commentId, Date created, String content, Reports reportId, Users userName) {
+    this.commentId = commentId;
     this.created = created;
     this.content = content;
+    this.reportId = reportId;
+    this.userName = userName;
+  }
+  
+  public Comments(Date created, String content) {
+	  this.created = created;
+	  this.content = content;
   }
 
   public int getCommentId() {

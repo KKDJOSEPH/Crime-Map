@@ -8,20 +8,20 @@ public class Reports {
   protected double longitude;
   protected Date reportTime;
   protected boolean publishedAsReport;
-  protected CrimeTips crimeTip;
+  protected int crimeTipId;
 
   
   public Reports(int reportId, double latitude, double longitude, Date reportTime, 
-      boolean publishedAsReport, CrimeTips crimeTip) {
+      boolean publishedAsReport, int crimeTipId) {
     this.reportId = reportId;
     this.latitude = latitude;
     this.longitude = longitude;
     this.reportTime = reportTime;
     this.publishedAsReport = publishedAsReport;
-    this.crimeTip = crimeTip;
+    this.crimeTipId = crimeTipId;
   }
 
-  public int getReportId() {
+public int getReportId() {
     return reportId;
   }
 
@@ -71,12 +71,12 @@ public class Reports {
   }
 
 
-  public CrimeTips getCrimeTip() {
-    return crimeTip;
+  public int getCrimeTipId() {
+    return crimeTipId;
   }
 
 
-  public void setCrimeTip(CrimeTips crimeTip) {
-    this.crimeTip = crimeTip;
+  public void setCrimeTipId(int crimeTipId) {
+    this.crimeTipId = crimeTipId;
   }
 }

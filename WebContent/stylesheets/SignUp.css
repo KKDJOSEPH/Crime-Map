@@ -2,11 +2,17 @@ html,
 body {
   margin: 0px;
   color: #3c240f;
+  background: url(../images/crime.png) center center / cover no-repeat;
 }
 
 .SignUp {
   background: url(../images/crime.png) center center / cover no-repeat;
   overflow hidden;
+}
+
+.newMain {
+	background: url(../images/crime.png) center center / cover no-repeat;
+	z-index: 100;
 }
 
 .signcard {
