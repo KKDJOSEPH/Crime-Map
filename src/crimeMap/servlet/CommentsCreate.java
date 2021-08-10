@@ -78,6 +78,6 @@ public class CommentsCreate extends HttpServlet {
           }
         }
         
-        req.getRequestDispatcher("/CommentsCreate.jsp").forward(req, resp);
+        req.getRequestDispatcher("/ReadReports.jsp").forward(req, resp);
     }
 }
