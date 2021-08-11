@@ -8,8 +8,8 @@ let map, heatmap;
 
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 13,
-    center: { lat: 45.814514649942375, lng: -117.68668108855391 }
+    zoom: 10,
+    center: { lat: 47.6062, lng: -122.3321 }
    // mapTypeId: "satellite",
   });
   heatmap = new google.maps.visualization.HeatmapLayer({
@@ -64,19 +64,21 @@ function changeOpacity() {
 }
 
 function getPoints() {
-  var result = jQuery.ajax ({
-    url: "heatmap",
+  var result = $.ajax ({
+    url: "http://localhost:8080/heatmap",
+    crossDomain: true,
+    dataType: 'jsonp',
     method: "post",
-    async: false,
+    async: true,
     data: ""
   });
-  var message = jQuery.parseJSON(result.responseText);
+  var message = $.parseJSON(result.responseText);
 
-  longitude = message.lng;
-  latitude = message.lat;
+  longitude = message["lng"];
+  latitude = message["lat"];
   coordinates = [];
   for (var i = 0; i < longitude.length; i++) {
-    coordinates.push([longitude[i], latitude[i]]);
+    coordinates.add(new google.maps.LatLng(latitude[i],longitude[i]));
   }
   return coordinates;
 }

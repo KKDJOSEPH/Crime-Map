@@ -24,14 +24,14 @@ public class ReportsDao {
         String location = "select Longitude, Latitude from Reports";
         Connection connection = null;
         PreparedStatement locationStmt = null;
-        List<Double> lng = new ArrayList<Double>();
-        List<Double> lat = new ArrayList<Double>();
+        List<Double> lng = new ArrayList<>();
+        List<Double> lat = new ArrayList<>();
         try {
             connection = connectionManager.getConnection();
             locationStmt = connection.prepareStatement(location);
             ResultSet results = locationStmt.executeQuery();
 
-            if(results.next()) {
+            while(results.next()) {
                 lng.add(results.getDouble("Longitude"));
                 lat.add(results.getDouble("Latitude"));
             }

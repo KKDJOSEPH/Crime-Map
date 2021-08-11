@@ -12,9 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import crimeMap.dal.ReportsDao;
-import netscape.javascript.JSObject;
 
 
 @WebServlet(urlPatterns = "/heatmap")
@@ -32,20 +30,15 @@ public class Heatmap extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        resp.setCharacterEncoding("utf-8");
-        resp.setContentType("text/html;charset=utf-8");
         crimeMap.model.Heatmap heatmap;
-
         try {
             heatmap = ReportsDao.getInstance().getLongLat();
+            String jsonObject = new Gson().toJson(heatmap);
+            resp.setCharacterEncoding("utf-8");
+            resp.setContentType("text/json");
+            resp.getWriter().write(jsonObject);
         } catch (SQLException e) {
             e.printStackTrace();
-            return;
         }
-
-        String jsonObject = new Gson().toJson(heatmap);
-        resp.setContentType("text/json");
-        resp.getWriter().write(jsonObject);
     }
 }
